@@ -1,6 +1,5 @@
 const gulp = require("gulp");
-const ts = require('gulp-typescript');
-const tsProject = ts.createProject('tsconfig.json');
+const babel = require("gulp-babel");
 const spawn = require('child_process').spawn;
 let node;
 
@@ -10,7 +9,7 @@ gulp.task('watch', function() {
     server();
 
     //Compile js and restart server if file change occurs
-    gulp.watch('./src', gulp.series(['compile', 'server']));
+    gulp.watch('./src', gulp.series(['babel', 'server']));
 
 });
 
@@ -21,7 +20,7 @@ gulp.task('server', () => {
 
 //Start or restart the server
 function server() {
-    
+
     if(node) node.kill();
 
 
@@ -37,10 +36,9 @@ function server() {
 }
 
 //Compile js
-gulp.task("compile", function () {
+gulp.task("babel", function () {
 
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest('dist'));
-
+    return gulp.src("./src/**/*.js")
+        .pipe(babel())
+        .pipe(gulp.dest("./dist"));
 });
