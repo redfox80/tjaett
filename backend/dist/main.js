@@ -19,5 +19,7 @@ const web = _http.default.createServer(server).listen(80);
 
 const sock = (0, _socket.default)(web);
 sock.on('connection', socket => {
-  console.log('connection');
+  socket.on('sentMessage', s => {
+    sock.emit('message', s);
+  });
 });

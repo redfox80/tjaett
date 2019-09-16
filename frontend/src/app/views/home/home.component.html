@@ -1,1 +1,16 @@
 <p>home works!</p>
+
+<form [formGroup]="messageForm" (ngSubmit)="send()">
+  <input type="text" formControlName="message" placeholder="Message"/>
+  <button type="submit">Send</button>
+</form>
+
+<br/>
+<br/>
+<br/>
+
+<ul>
+
+  <li *ngFor="let message of messages">{{ message.text }}</li>
+
+</ul>

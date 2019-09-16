@@ -7,7 +7,7 @@ import io from 'socket.io';
 const server = express();
 
 server.get('/', (req, res) => {
-    res.send('Hey there');
+  res.send('Hey there');
 });
 
 const web = http.createServer(server).listen(80);
@@ -15,5 +15,7 @@ const web = http.createServer(server).listen(80);
 const sock = io(web);
 
 sock.on('connection', socket => {
-   console.log('connection');
+  socket.on('sentMessage', s => {
+    sock.emit('message', s);
+  });
 });
